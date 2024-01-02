@@ -7,7 +7,8 @@ def generate_srt_multi(lang, directory):
     for filename in os.listdir(directory):
         extension = os.path.splitext(filename)[1]
         if extension in ACCEPTED_EXTENSIONS:
-            generate_srt.generate_srt(lang, directory + filename)
+            fullpath = os.path.join(directory, filename)
+            generate_srt.generate_srt(lang, fullpath)
 
 if len(sys.argv) != 3:
     print(f"Usage: python {sys.argv[0]} <lang> <directory>")

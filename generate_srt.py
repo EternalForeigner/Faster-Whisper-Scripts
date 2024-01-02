@@ -27,6 +27,7 @@ def seconds_to_timestamp(value):
 def build_srt(inputFile, segments, medialength):
     allText = ""
     index = 1
+    lastprogress = 0
     for segment in segments:
         allText += str(index)
         allText += os.linesep
@@ -41,8 +42,11 @@ def build_srt(inputFile, segments, medialength):
         allText += os.linesep
 
         index += 1
-        progress = round((segment.end / medialength) * 100)
-        print(f"Progress: {progress}%")
+        progress = int((segment.end / medialength) * 100)
+        if lastprogress != progress:
+            print(f"Progress: {progress}%")
+            lastprogress = progress
+
     return allText
 
 def generate_srt(lang, inputfile):

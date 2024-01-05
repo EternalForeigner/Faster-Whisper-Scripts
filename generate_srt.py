@@ -49,14 +49,24 @@ def build_srt(inputFile, segments, medialength):
 
     return allText
 
+def get_output_fullpath(inputfullfilepath):
+    fullfiledir = os.path.dirname(inputfullfilepath)
+    fullsubsdir = os.path.join(fullfiledir, "subs")
+    if not os.path.exists(fullsubsdir):
+        os.makedirs(fullsubsdir)
+
+    filebasename = os.path.basename(inputfullfilepath)
+    srtbasename = f"{os.path.splitext(filebasename)[0]}.srt"
+    return os.path.join(fullsubsdir, srtbasename)
+
 def generate_srt(lang, inputfile):
     medialength = get_media_length(inputfile)
     print(f"Generating srt file for {inputfile} ({medialength} seconds length)")
 
     segments = get_segments(lang, inputfile)
     srtText = build_srt(inputfile, segments, medialength)
-    outputfile = os.path.splitext(inputfile)[0] + '.srt'
 
+    outputfile = get_output_fullpath(inputfile)
     with open(outputfile, "w") as f:
         f.write(srtText)
     print(f"Finished and wrote file: {outputfile}")

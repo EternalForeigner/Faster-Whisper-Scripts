@@ -5,9 +5,13 @@ ACCEPTED_EXTENSIONS = ['.mp4','.mkv']
 
 def generate_srt_multi(lang, directory):
     for filename in os.listdir(directory):
+        fullpath = os.path.join(directory, filename)
+        if os.path.isdir(fullpath):
+            generate_srt_multi(lang, fullpath)
+            continue
+
         extension = os.path.splitext(filename)[1]
         if extension in ACCEPTED_EXTENSIONS:
-            fullpath = os.path.join(directory, filename)
             generate_srt.generate_srt(lang, fullpath)
 
 if len(sys.argv) != 3:

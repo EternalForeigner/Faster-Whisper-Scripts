@@ -29,17 +29,11 @@ def build_srt(inputFile, segments, medialength):
     index = 1
     lastprogress = 0
     for segment in segments:
-        allText += str(index)
-        allText += os.linesep
-
+        allText += f"{index}{os.linesep}"
         startTimestamp = seconds_to_timestamp(segment.start)
         endTimestamp = seconds_to_timestamp(segment.end)
-        allText += f"{startTimestamp} --> {endTimestamp}"
-        allText += os.linesep
-
-        allText += f" {segment.text}"
-        allText += os.linesep
-        allText += os.linesep
+        allText += f"{startTimestamp} --> {endTimestamp}{os.linesep}"
+        allText += f" {segment.text}{os.linesep}{os.linesep}"
 
         index += 1
         progress = int((segment.end / medialength) * 100)
